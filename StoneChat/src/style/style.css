@@ -1,0 +1,258 @@
+html, body {
+    height: 100%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.flex-dir-col {
+    flex-direction: column;
+}
+
+.jc-sb {
+    justify-content: space-between;
+}
+
+.jc-center {
+    justify-content: center;
+}
+
+.ai-cntr {
+    align-items: center;
+}
+
+.ai-str {
+    align-items: stretch;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+}
+
+h1, h2 {
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+select {
+    font-size: 20px;
+}
+
+button {
+    font-size: 20px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+label {
+    font-size: 25px;
+}
+
+input {
+    font-size: 20px;
+}
+
+.bcg{
+    background-color: rgb(255, 213, 139);
+}
+
+#main {
+    margin-left: 5px;
+    width: 70%;
+    display: none;
+}
+
+#main2 {
+    width: 100%;
+    height: calc(100% - 15px);
+}
+
+#btn-connect {
+    display: none;
+}
+
+.common {
+    /* width: 70%; */
+    height: calc(100% - 15px);
+}
+
+.role-log {
+    border: 2px solid black;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.role {
+    width: 240px;
+    margin-right: 5px;
+}
+
+/* .server-right { */
+.logs {
+    border: 2px solid black;
+    padding: 5px;
+    background-color: lightgreen;
+    height: calc(100% - 182px);
+}
+
+.log-area {
+    padding: 5px;
+    /* height: 100px; */
+    height: calc(100% - 15px);
+    overflow-y:scroll;
+}
+
+.server-host-port {
+
+}
+
+#server, #host, #port, #role {
+    margin-bottom: 5px;
+}
+
+
+.clients {
+    height: calc(100% - 12px);
+    border: 2px solid black;
+    padding: 5px;
+}
+
+#add_client {
+    margin-bottom: 10px;
+}
+
+#clients_container {
+    height: calc(100% - 60px);
+    /* height: 100%; */
+    /* gap: 10px; */
+}
+
+.client {
+    margin-left: 3px;
+    margin-right: 3px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    padding: 5px;
+    background-color: lightsteelblue;
+}
+
+#logs {
+    
+}
+
+.viewport {
+    border: 1px solid black;
+    background-color: white;
+}
+
+.mes {
+    width: 100%;
+    height: calc(100% - 30px);
+    margin-top: 3px;
+}
+
+.mes-area {
+    width: 100%;
+    height: calc(100% - 55px);
+}
+
+.mes-viewport {
+    padding: 3px;
+    height: calc(100% - 10px);
+    max-width: 100%;
+    overflow-y:scroll;
+}
+
+.mes-viewport__item-sent {
+    padding: 3px;
+    background-color: lightskyblue;
+    border-radius: 4px;
+    font-size: 30px;
+    margin-left: auto;
+    margin-bottom: 10px;
+    max-width: 50%;
+    overflow-wrap: break-word;
+}
+
+.mes-viewport__item-rec {
+    padding: 3px;
+    background-color: lightpink;
+    border-radius: 4px;
+    font-size: 30px;
+    margin-right: auto;
+    margin-bottom: 10px;
+    max-width: 50%;
+    overflow-wrap: break-word;
+}
+
+.mes-act {
+    margin-top: 3px;
+}
+
+.mes-act textarea {
+    resize: none;
+}
+
+#mes_mes {
+    width: 100%;
+    /* height: 30px; */
+    margin-right: 3px;
+    font-size: 20px;
+}
+
+.write-to-cont-main {
+    margin-left: 5px;
+    margin-bottom: 10px;
+    /* width: calc(100% - 390px); */
+    width: 30%;
+    height: calc(100% - 0px);
+}
+
+.write-to-cont {
+    height: calc(100% - 0px);
+}
+
+.mes-area h3 {
+    text-decoration: underline;
+    
+}
+
+.list-write-to {
+    height: calc(100% - 15px);
+    overflow-y:scroll;
+    padding: 3px;
+    background-color: lightgreen;
+}
+
+.list-write-to__item span {
+    width: 100%;
+    font-size: 20px;
+}
+
+.list-write-to__item input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+    font-size: 20px;
+}
+
+.list-write-to__item input[type="radio"]:checked + span {
+    background: lightsalmon;
+    border: 1px solid rgb(0, 0, 0);
+    font-weight: 700;
+    padding-left: 3px;
+    font-size: 20px;
+}
+
+#btn-connect {
+    margin-left: 3px;
+}
+
