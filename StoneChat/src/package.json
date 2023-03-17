@@ -1,0 +1,19 @@
+{
+  "name": "stonechat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "net": "^1.0.2"
+  },
+  "devDependencies": {
+    "electron": "^23.1.4"
+  }
+}

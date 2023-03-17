@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <link rel="stylesheet" href="style/style.css">
+        
+        <title>Stone Chat</title>
+   </head>
+   
+    <body class="common d-flex">
+        <div id="main2">
+            <div class="role-log bcg d-flex jc-sb">
+                <div class="role d-flex flex-dir-col">
+                    <h1 id="role-title">*** Server ***</h1>
+                    <select id="role" onchange="selectRole(this)">
+                        <option value="*** Server ***" selected>Server</option>
+                        <option value="*** Client ***">Client</option>
+                    </select>
+                    <label class="d-flex jc-sb">Host: <input id="host" class="viewport" type="text" value="localhost"></label>
+                    <label class="d-flex jc-sb">Port: <input id="port" class="viewport" type="number" value="3000"></label>
+                    <button id="btn-run" onclick="listenServer()">Run</button>
+                    <button id="btn-connect" onclick="clientConnect(document.getElementById('client_title').value)">Connect</button>
+                </div>
+            </div>
+
+            <div class="logs d-flex flex-dir-col">
+                <h2>Logs:</h2>
+                <div id="logs" class="log-area viewport d-flex flex-dir-col"></div>
+            </div>
+        </div>
+
+        <div id="main">
+            <div class="clients bcg">
+                <h1>*** Client ***</h1>
+                <!-- <button id="add_client" onclick="addCLient()">Add client</button> -->
+                <div id="clients_container" class="d-flex jc-sb">
+                    <div class="client">
+                        <!-- <h3 id="client-title">Client</h3> -->
+                        <label class="d-flex">Name: <input id="client_title" class="viewport" type="text"></label>
+                        <div class="mes d-flex jc-sb">
+                            <div class="mes-area ">
+                                <div id="mes_viewport" class="mes-viewport d-flex flex-dir-col viewport"></div>
+                                <div class="mes-act d-flex">
+                                    <!-- <input id="mes-mes" class="viewport" type="text"> -->
+                                    <textarea id="mes_mes" class="viewport"></textarea>
+                                    <button onclick="sendMes()">Send</button>
+                                    
+                                </div>
+                            </div>
+                            <div class="write-to-cont-main d-flex flex-dir-col jc-sb">
+                                <div class="write-to-cont d-flex flex-dir-col">
+                                    <h3>Write to:</h3>
+                                    <div id="list_write_to" class="list-write-to viewport"></div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="scripts/functions.js"></script>
+        <script src="scripts/server.js"></script>
+        <script src="scripts/client.js"></script>
+        
+        
+    </body>
+
+</html>
+
+            
+
