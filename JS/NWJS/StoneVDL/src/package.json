@@ -1,0 +1,33 @@
+{
+  "name": "stonevdl",
+  "version": "1.0.0",
+  "description": "description",
+  "main": "index.js",
+  "scripts": {
+    "dist": "build --tasks win-x64 --mirror https://npm.taobao.org/mirrors/nwjs/ .",
+    "start": "run --x86 --mirror https://dl.nwjs.io/ ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "check-internet-connected": "^2.0.6",
+    "fluent-ffmpeg": "^2.1.2",
+    "fs-extra": "^11.1.1",
+    "nw": "^0.72.0",
+    "split-file": "^2.3.0",
+    "winattr": "^3.0.0",
+    "youtube-captions-scraper": "^2.0.0",
+    "ytdl-core": "^4.10.0"
+  },
+  "devDependencies": {
+    "nwjs-builder-phoenix": "^1.15.0"
+  },
+  "build": {
+    "nwVersion": "0.72.0",
+    "packed": true
+  },
+  "window": {
+      "icon": "img/logo.png"
+    }
+}

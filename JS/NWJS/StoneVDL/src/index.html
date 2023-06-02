@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title>Stone YouTube Video Downloader</title>
+        <link rel="shortcut icon" href="#"> <!-- remove favicon error -->
+        <link rel="stylesheet" href="styles.css">
+        
+    </head>
+    <body class="clr-bcg-main">
+        <div class="download d-flex flex-dir-col" id="download">
+            <div class="download-part fixed-height d-flex">
+                <button class="btn bcg-frame-red-sand" id="btn_anlz" onclick="checkInternet(analyze)">Анализировать</button>
+                <div class="btn-green frame-green d-flex" id="btn_anlz_process_cont">
+                    <img id="btn_anlz_process" src="./img/conversion.png" alt="">
+                </div>
+                <button class="btn btn-add bcg-frame-red jc-center" id="" onclick="processInputField('url', 'copy_link')"><img src="./img/copy_link.png" alt=""></button>
+                <input class="frame-red" type="url" id="url" placeholder="ссылка на видео..." value="https://www.youtube.com/watch?v=9OfoX3tqfd4">
+                <button class="btn btn-add bcg-frame-red jc-center" id="" onclick="processInputField('url', 'clear')"><img src="./img/close.png" alt=""></button>
+            </div>
+            
+            <div class="download-part fixed-height download-name d-flex">
+                <h1 class="bcg-frame-red-sand">Имя:</h1>
+                <input class="frame-red" type="text" id="download_name" placeholder="имя сохраняемого файла...">
+                <button class="btn btn-add bcg-frame-red jc-center" id="" onclick="processInputField('download_name', 'clear')"><img src="./img/close.png" alt=""></button>
+            </div>
+
+            <div class="download-folder fixed-height d-flex">
+                <label for="download_folder" class="bcg-frame-red-sand">\..</label>
+                <input hidden type="file" id="download_folder" onchange="setFolderPath(false)" nwdirectory>
+                <input class="frame-red" type="text" id="download_folder_path" placeholder="папка загрузки...">
+                <button class="btn btn-add bcg-frame-red" id="btn_default_path" onclick="setFolderPath(true)"><img id="" src="img/repeat.png" alt=""></button>
+            </div>
+
+            <div class="download-part d-flex">
+                <div class="download-video-mp3 bcg-frame-red-sand d-flex" id="">
+                    <button class="btn btn-green frame-green" id="btn_download" data-url="" onclick="checkInternet(preDownload, this.getAttribute('data-url'), 'false', 'false', '')">Видео</button>
+                    <select class="frame-red" id="select_format" onchange="selectFormatChange()"></select>
+                    <button class="btn btn-green frame-green" id="btn_download_mp3" data-url="" onclick="checkInternet(preDownload, this.getAttribute('data-url'), 'true', 'false', '')">MP3</button>
+                </div>
+                
+                <div class="download-subtitles bcg-frame-red-sand d-flex" id="">
+                    <select class="frame-red" id="select_subtitles"></select>
+                    <button class="btn btn-green frame-green" id="btn_download_subt" data-url="" onclick="checkInternet(preDownload, this.getAttribute('data-url'), 'false', 'true', '')">Субтитры</button>
+                </div>
+            </div>
+
+            <div class="download-part download-frame-info-list d-flex" id="download_frame_info">
+                <div class="download-part download-frame-info d-flex flex-dir-col">
+                    <iframe class="download-frame frame-red bcg-wht" id="download_frame" src="" allowfullscreen></iframe>
+                    <div class="video-info-cont d-flex flex-dir-col" id="video_info_cont">
+                        <h1 class="frame-red bcg-wht">Информация:</h1>
+                        <div class="video-info bcg-frame-red-sand d-flex flex-dir-col" id="video_info">
+                            <div class="video-info-item d-flex">
+                                <h1 class="frame-red bcg-wht">Название:</h1>
+                                <p id="video_info_title"></p>
+                            </div>
+                            <div class="video-info-item d-flex">
+                                <h1 class="frame-red bcg-wht">Канал:</h1>
+                                <p id="video_info_channel"></p>
+                            </div>
+                            <div class="video-info-item d-flex">
+                                <h1 class="frame-red bcg-wht">Опубликовано:</h1>
+                                <p id="video_info_published"></p>
+                            </div>
+                            <div class="video-info-item d-flex">
+                                <h1 class="frame-red bcg-wht">Длительнось:</h1>
+                                <p id="video_info_length"></p>
+                            </div>
+                            <div class="video-info-item d-flex">
+                                <h1 class="frame-red bcg-wht">Просмотров:</h1>
+                                <p id="video_info_view_count"></p>
+                            </div>
+                            <div class="video-info-item video-info-desc d-flex">
+                                <h1 class="frame-red bcg-wht">Описание:</h1>
+                                <p id="video_info_desc"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="download-list-cont d-flex flex-dir-col" id="download_list_cont">
+                    <div class="d-flex jc-sb">
+                        <h1 class="frame-red bcg-wht">Загрузки:</h1>
+                        <div class="d-flex download-list-btns">
+                            <button class="btn bcg-frame-red-sand" id="btn_start_active_dwnlds" onclick="pauseStartDowloads('ON')">
+                                <img id="btn_start_active_dwnlds_img" src="./img/play.png" alt="">
+                            </button>
+                            <button class="btn bcg-frame-red-sand" id="btn_pause_active_dwnlds" onclick="pauseStartDowloads('OFF')">
+                                <img id="btn_pause_active_dwnlds_img" src="./img/pause.png" alt="">
+                            </button>
+                            <button class="btn bcg-frame-red" id="btn_clear" onclick="clearList()">Очистить</button>
+                        </div>
+                        
+                    </div>
+                    <div class="download-list d-flex flex-dir-col frame-red" id="download_list">
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+      
+        <script src="src/functions.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,3 @@
+Приложение: YouTube Video Downloader, программа для скачвания видео с YouTube на NWJS
+ОС: Windows
+Ссылка на скачвание: https://drive.google.com/file/d/112fxzFzIH6gze9wtXCOF5Xh8yivossOY/view?usp=sharing
