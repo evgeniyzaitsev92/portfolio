@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/invisib.png</file>
+        <file>Resources/visib.png</file>
+        <file>Resources/CheckYourself.png</file>
+        <file>Resources/CheckYourself3.png</file>
+    </qresource>
+</RCC>
