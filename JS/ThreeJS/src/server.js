@@ -1,20 +1,12 @@
 const http = require("http");
 
 function createConeProps(props) {
-    let triangles = [];
+    let points = [];
     for(let i = 0; i < props.N; i++){
-        function setPoits(height){
-            let triangle = [
-                {1: props.R*Math.cos(2*Math.PI*i/props.N), 2: 0, 3: props.R*Math.sin(2*Math.PI*i/props.N)},
-                {1: props.R*Math.cos(2*Math.PI*(i+1)/props.N), 2: 0, 3: props.R*Math.sin(2*Math.PI*(i+1)/props.N)},
-                {1: 0, 2: height, 3: 0}
-            ];
-            triangles.push(triangle);
-        }
-        setPoits(props.H);
-        setPoits(0);
+        let point = {'x': props.R*Math.cos(2*Math.PI*i/props.N), 'z': props.R*Math.sin(2*Math.PI*i/props.N)};
+        points.push(point);
     }
-    return triangles;
+    return points;
 }
 
 // SERVER
