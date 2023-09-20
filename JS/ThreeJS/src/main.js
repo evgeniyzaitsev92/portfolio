@@ -2,6 +2,7 @@ const http = require("http");
 const THREE = require('three');
 const gui = new dat.GUI();
 const view = document.getElementById('view');
+import {OrbitControls} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls";
 const REDUCER = 20;
 
 // Scene
@@ -27,12 +28,15 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 view.appendChild(renderer.domElement);
 
+let controls = new OrbitControls(camera, renderer.domElement);
+controls.enablePan = false;
+
 // Light
 const lightAmb = new THREE.AmbientLight(0x8c8c8c);
 scene.add(lightAmb);
 
 const light = new THREE.PointLight(0xffffff, 75);
-light.position.set(4, 4, 4);
+light.position.set(-5, 4, 4);
 light.castShadow = true;
 light.shadow.normalBias = 0.5;
 scene.add(light);
@@ -45,7 +49,7 @@ let props = {
 };
 let pointsData = [];
 let surf = {
-    hasFaces: true,
+    isSmooth: true,
     hasWireFrame: false
 };
 
@@ -62,10 +66,9 @@ propsFolder.add(props, 'H', 0, 16, 0.25).name('Height').onChange(function(val){
     props.H = val;
     sendToServer(props);
 });
-propsFolder.add(surf, 'hasFaces').name('Faces').onChange(function(val){
-    surf.hasFaces = val;
+propsFolder.add(surf, 'isSmooth').name('Smooth shading').onChange(function(val){
+    surf.isSmooth = val;
     process(pointsData);
-
 });
 propsFolder.add(surf, 'hasWireFrame').name('Wireframe').onChange(function(val){
     surf.hasWireFrame = val;
@@ -74,32 +77,38 @@ propsFolder.add(surf, 'hasWireFrame').name('Wireframe').onChange(function(val){
 propsFolder.open();
 
 // Build cone 
-function createTriangles(pointsData, surf){
+function createTriangles(pointsData, height){
     let triangles = [];
+    let normalDir = height===0 ? 1 : -1;
+    const B = {0: 0, 1: -(Math.pow(props.R, 2)/props.H), 2: 0};
     for(let i = 0; i < pointsData.length; i++){
-        const triangle = pointsData[i];
+        const point = pointsData[i];
+        const point2 = pointsData[i+1 >= pointsData.length ? 0 : i+1];
         let points = [];
-        points.push(new THREE.Vector3(triangle[0][1], triangle[0][2], triangle[0][3]));
-        points.push(new THREE.Vector3(triangle[1][1], triangle[1][2], triangle[1][3]));
-        points.push(new THREE.Vector3(triangle[2][1], triangle[2][2], triangle[2][3]));
-        let geometry = new THREE.BufferGeometry().setFromPoints(points);
-    
-        if(surf.hasFaces == true){
-            const triangleMaterial = new THREE.MeshPhongMaterial({
-                color: 0xfc0303,
-                side: THREE.DoubleSide, 
-                flatShading: true
-            });
-            var triangleMesh = new THREE.Mesh(geometry, triangleMaterial);
-            triangleMesh.castShadow = true; //default is false
-            triangleMesh.receiveShadow = false;
-            triangles.push(triangleMesh);
+        points.push(new THREE.Vector3(point['x'], 0, point['z']));
+        points.push(new THREE.Vector3(point2['x'], 0, point2['z']));
+        points.push(new THREE.Vector3(0, height, 0));
+        let geometry = new THREE.BufferGeometry().setFromPoints(points);       
+
+        function normal(coord, X, Y, Z){
+            return coord/(Math.sqrt((Math.pow(X-B[0], 2))+(Math.pow(Y-B[1], 2))+(Math.pow(Z-B[2], 2))));
         }
 
-        if(surf.hasWireFrame == true){
-            var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0x09ff00 }));
-            triangles.push(line);
-        }
+        geometry.setAttribute('normal', new THREE.Float32BufferAttribute([
+            normalDir*normal(points[0].x, points[0].x, points[0].y, points[0].z), normalDir*normal(points[0].y, points[0].x, points[0].y, points[0].z)-0.0001, normalDir*normal(points[0].z, points[0].x, points[0].y, points[0].z),
+            normalDir*normal(points[1].x, points[1].x, points[1].y, points[1].z), normalDir*normal(points[1].y, points[1].x, points[1].y, points[1].z)-0.0001, normalDir*normal(points[1].z, points[1].x, points[1].y, points[1].z),
+            normalDir*normal(points[2].x, points[2].x, points[2].y, points[2].z), normalDir*normal(points[2].y, points[2].x, points[2].y, points[2].z)-0.0001, normalDir*normal(points[2].z, points[2].x, points[2].y, points[2].z)
+        ], 3));
+    
+        const triangleMaterial = new THREE.MeshPhongMaterial({
+            color: 0xfc0303,
+            side: THREE.DoubleSide, 
+            flatShading: !surf.isSmooth,
+            wireframe: surf.hasWireFrame
+        });
+        var triangleMesh = new THREE.Mesh(geometry, triangleMaterial);
+        triangleMesh.castShadow = true; //default is false
+        triangles.push(triangleMesh);
     }
     return triangles;
 };
@@ -112,6 +121,12 @@ function removeOld(){
     });
 };
 
+function getTriangles(pointsData){
+    let body = createTriangles(pointsData, props.H);
+    let bottom = createTriangles(pointsData, 0);
+    return [...body, ...bottom];
+}
+
 function buildNew(){
     triangles.forEach(element => {
         scene.add(element);
@@ -121,7 +136,7 @@ function buildNew(){
 
 function process(pointsData){
     removeOld();
-    triangles = createTriangles(pointsData, surf);
+    triangles = getTriangles(pointsData);
     trianglesOld = triangles;
     buildNew();
 };
@@ -179,6 +194,7 @@ function onMouseMove(event){
 }
 
 function onMouseDown(event){
+    if(event.button === 0 || event.button === 1){return;}
     event.preventDefault();
     mouseDown = true;
     mouseX = event.clientX;
@@ -217,11 +233,11 @@ function onWindowResize(){
     camera.updateProjectionMatrix();
     renderer.setSize((window.innerWidth-REDUCER), window.innerHeight-REDUCER);
 }
+onWindowResize();
 
 // Render
 function render(){
-    requestAnimationFrame(render);   
-    renderer.render(scene, camera);
-    renderer.setClearColor(0x000000, 0.0);
+    requestAnimationFrame(render); 
+    renderer.render(scene, camera);    
 }
 render();
