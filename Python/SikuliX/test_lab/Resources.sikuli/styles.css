@@ -1,0 +1,50 @@
+center {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+img {
+    border: 2px solid black;
+}
+ 
+h1, h2, h3 {
+    margin: 5px;
+}
+
+.clr-green {
+    color: green;
+}
+
+.clr-red {
+    color: red;
+}
+    
+.test-case {
+    background-color: rgb(225, 225, 225);
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.validate-image-img {
+    width: 75%;
+}
+
+.comment {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.comment--sign {
+    margin: auto 0;
+    font-weight: bold;
+}
+
+.result-answer {
+    border-top: 2px solid black;
+    display: flex; 
+    justify-content: center;
+    width: fit-content;
+}
